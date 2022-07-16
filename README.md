@@ -1,6 +1,4 @@
-```diff
-! # SWITCH TO NGSI-LD BRANCH
-```
+# ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) `SWITCH TO NGSI-LD BRANCH`
 
 [![FIWARE Banner](https://fiware.github.io/tutorials.PEP-Proxy/img/fiware.png)](https://www.fiware.org/developers)
 
