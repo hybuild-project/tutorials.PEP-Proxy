@@ -28,8 +28,7 @@ services:
     depends_on:
       - mongo-db
     networks:
-      default:
-        ipv4_address: 172.18.1.9
+      - default
     expose:
       - "${ORION_PORT}"
     ports:
@@ -91,8 +90,7 @@ services:
     container_name: fiware-keyrock
     hostname: keyrock
     networks:
-      default:
-        ipv4_address: 172.18.1.5
+      - default
     depends_on:
       - mysql-db
     ports:
@@ -122,8 +120,7 @@ services:
     container_name: fiware-orion-proxy
     hostname: orion-proxy
     networks:
-      default:
-        ipv4_address: 172.18.1.10
+      - default
     depends_on:
         keyrock:
           condition: service_started
@@ -170,7 +167,6 @@ services:
         condition: service_started
     networks:
       default:
-        ipv4_address: 172.18.1.7
         aliases:
           - tutorial
           - context-provider
@@ -198,7 +194,7 @@ services:
       - "NGSI_LD_PREFIX="
       - "SECURE_ENDPOINTS=true"
       - "KEYROCK_URL=http://localhost"
-      - "KEYROCK_IP_ADDRESS=http://172.18.1.5"
+      - "KEYROCK_IP_ADDRESS=http://keyrock"
       - "KEYROCK_PORT=${KEYROCK_PORT}"
       - "KEYROCK_CLIENT_ID=tutorial-dckr-site-0000-xpresswebapp"
       - "KEYROCK_CLIENT_SECRET=tutorial-dckr-site-0000-clientsecret"
@@ -241,11 +237,10 @@ services:
     ports:
       - "${MYSQL_DB_PORT}:${MYSQL_DB_PORT}" # localhost:3306
     networks:
-      default:
-        ipv4_address: 172.18.1.6
+      - default
     environment:
       - "MYSQL_ROOT_PASSWORD_FILE=/run/secrets/my_secret_data"
-      - "MYSQL_ROOT_HOST=172.18.1.5" # Allow Keyrock to access this database
+      - "MYSQL_ROOT_HOST=%" # Allow any container to access this database
     volumes:
       - mysql-db:/var/lib/mysql
       - ../mysql-data:/docker-entrypoint-initdb.d/:ro
@@ -256,9 +251,7 @@ networks:
   default:
     labels:
       org.fiware: 'tutorial'
-    ipam:
-      config:
-        - subnet: 172.18.1.0/24
+
 volumes:
   mysql-db: ~
   mongo-db: ~
